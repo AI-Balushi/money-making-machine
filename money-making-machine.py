@@ -19,7 +19,7 @@ if st.button("Generate Money"):
 # Fetch Side Hustle from FastAPI
 def fetch_side_hustle():
     try:
-        response = requests.get("http://127.0.0.1:8000/side_hustles?apiKey=1234567890")
+        response = requests.get("http://127.0.0.1:8000/side_hustles")  # No API key
         if response.status_code == 200:
             data = response.json()
             return data.get("side_hustle", "Freelancing")
@@ -32,3 +32,20 @@ st.subheader("💼 Side Hustle Ideas")
 if st.button("Generate Hustle"):
     idea = fetch_side_hustle()
     st.success(f"🚀 **{idea}**")
+
+# Fetch Money Quote from FastAPI
+def fetch_money_quote():
+    try:
+        response = requests.get("http://127.0.0.1:8000/money_quotes")  # No API key
+        if response.status_code == 200:
+            data = response.json()
+            return data.get("money_quote", "Money is the root of all evil!")
+        else:
+            return "Couldn't fetch a quote. Try again!"
+    except requests.exceptions.RequestException:
+        return "🚨 Server error! Make sure FastAPI is running."
+
+st.subheader("💡 Money-Making Motivation")
+if st.button("Get Inspired"):
+    quote = fetch_money_quote()
+    st.success(f"📜 {quote}")
